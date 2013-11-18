@@ -285,18 +285,44 @@ class Izvjestaj extends DataManipulation {
     return $return;
   }
   
-  public function getBrCasovaPerNastavnik($month) {
-    $sql = "SELECT DISTINCT nastavnik_id, nastavnik.ime, nastavnik.prezime, datum, naziv_predmeta AS predmet, COUNT(*) AS brCasova 
+  public function getBrCasovaPerNastavnik($month, $year) {
+    $month = $month < 10 ? "0".$month : $month;
+    $sql = "SELECT DISTINCT naziv_predmeta AS predmet, datum, COUNT(*) AS brCasova, nastavnik.ime, nastavnik.prezime, nastavnik.id   
             FROM nastava
             LEFT JOIN nastavnik ON (nastavnik.id = nastava.nastavnik_id)
             LEFT JOIN predmet ON (predmet.id = nastava.predmet_id)
-            WHERE  `datum` LIKE  '2012-$month-%'
+            WHERE  `datum` LIKE  '$year-$month-%'
             GROUP BY nastavnik_id, datum";
     $rst = mysql_query($sql);
+    $results = array();
+    $tempId = "";
     while ($row = mysql_fetch_assoc($rst)) {
-      $options.="\n<option value='" . $row['godina'] . "'>" . $row['godina'] . "</option>";
+      //echo $row['id']."<br>";
+      $results[] = $row;
     }
-    return $options;
+    mysql_free_result($rst);
+    //$this->debug($results);
+    return $this->prepareData($results);
+  }
+  
+  private function prepareData($data) {
+    $temp = array();
+    if (is_array($data)) {
+      foreach($data as $k => $v){
+        if (isset($temp[$v['id']])) {
+          $temp[$v['id']][] = $v;
+        }
+        else {
+          $temp[$v['id']][] = $v;
+        }
+          
+      }
+    }
+    return $temp;
+  }
+  
+  public function debug($data) {
+    echo "<pre>";print_r($data);echo "</pre>";
   }
 }
 
