@@ -8,5 +8,4 @@
 //$pdf->Output('bokac', 'I');
 //$pdf->Close();
 include "incl/data.inc.php"; 
-$izvjestaj->debug($izvjestaj->getBrCasovaPerNastavnik(12, 2012));
 ?>

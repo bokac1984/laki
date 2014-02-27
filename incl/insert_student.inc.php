@@ -6,7 +6,7 @@ $pass = "";
 $database = "etf_rfid";
 
 if (!$db=mysql_connect($host, $user, $pass)) {
-	die ("<b>Spajanje na mysql server je bilo neuspješno</b>");
+	die ("<b>Spajanje na mysqli server je bilo neuspješno</b>");
 }
 if (!mysql_select_db($database, $db)) {
 	die ("<b>Greška pri odabiru baze</b>");

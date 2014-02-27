@@ -49,7 +49,7 @@ if(isset($_REQUEST["filter"]))
 		}
 	}
 }
-echo "<br>".$sqlQuery;
+//echo "<br>".$sqlQuery;
 $totalresult = mysql_num_rows(mysql_query($sqlQuery));
 //stranicenje
 $currentPage = $_SERVER["PHP_SELF"]; 
